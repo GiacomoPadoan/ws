@@ -1,13 +1,64 @@
-const express = require("express")
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
+const Invoice = require("../schema/invoice")
+/**
+ * @swagger
+ * /invoice:
+ *   get:
+ *     description: Get all invoices
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *   post:
+ *     description: Create a new invoice
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Invoice'
+ *     responses:
+ *       201:
+ *         description: Invoice created successfully
+ * /invoice/{id}:
+ *   delete:
+ *     description: Delete an invoice
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       204:
+ *         description: Invoice deleted successfully
+ *   put:
+ *     description: Update an invoice
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Invoice'
+ *     responses:
+ *       200:
+ *         description: Invoice updated successfully
+ */
 
-module.exports = router
+module.exports = router;
 
-router.get("/",async (req, res) => {
-    const {getInvoice}= require("../db/invoice")
-    const resultato=await getInvoice()
-    res.send({r:resultato})
-  })
+router.get("/", async (req, res) => {
+  const { getInvoice } = require("../db/invoice");
+  const resultato = await getInvoice();
+  res.send({ r: resultato });
+});
+
 router.post("/create", async (req, res, next) => {
   try {
     const { data, utente, indirizzata, motivazioni, somma } = req.body;
@@ -25,7 +76,8 @@ router.post("/create", async (req, res, next) => {
     next(err);
   }
 });
-router.delete("/delete/:id", async (req, res, next) => {
+
+router.delete("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -42,6 +94,7 @@ router.delete("/delete/:id", async (req, res, next) => {
     next(err);
   }
 });
+
 router.put("/update/:id", async (req, res, next) => {
   try {
     const { id } = req.params;

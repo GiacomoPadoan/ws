@@ -1,8 +1,7 @@
-const { sequelize, Sequelize } = require("../lib/database");
-
-const Invoice = sequelize.define("invoice", {
+const { sequelize, Sequelize } = require("../lib/db-conection");
+const Invoice = sequelize.define("fatture", {
     id: {
-        type: Sequelize.INT,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
         allowNull: false
@@ -12,24 +11,24 @@ const Invoice = sequelize.define("invoice", {
         allowNull: false
     },
     utente: {
-        type: Sequelize.INT,
+        type: Sequelize.INTEGER,
         allowNull: false
     },
     indirizzata: {
-        type: Sequelize.VARCHAR,
+        type: Sequelize.STRING,
         allowNull: false
     },
     motivazioni: {
-        type: Sequelize.VARCHAR,
+        type: Sequelize.STRING,
         allowNull: false
     },
     somma: {
-        type: Sequelize.int,
+        type: Sequelize.INTEGER,
         allowNull: false
     }
 }, {
     timestamps: false,
-    tableName: "invoice",
+    tableName: "fatture",
 });
 
 module.exports = {
